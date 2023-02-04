@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export class User extends Component {
     render() {
 
-        const {login, avatar_url, html_url, follwers} = this.props.user;
+        const {login, avatar_url, html_url} = this.props.user;
 
         return (
         <div className='card mb-3'>
@@ -14,8 +14,7 @@ export class User extends Component {
                 <div className='col-md-9'>
                     <div className='card-body'>
                         <h3 className='card-title'>{login}</h3>
-                        <p>{follwers}</p>
-                        <a target="_blank" className='btn btn-primary' href={html_url}>Github Profile</a>
+                        <a href={html_url} className='btn btn-primary' target="_blank" rel="noreferrer">Github Profile</a>
                     </div>
                 </div>
             </div>
