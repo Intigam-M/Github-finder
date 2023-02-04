@@ -1,12 +1,12 @@
 import Navbar from './components/Navbar'
-import User from './components/User';
+import UserList from './components/UserList';
 function App() {
   return (
     <div>
-      <Navbar />
-      <div className="container mt-3">
-        <User />
-      </div>
+        <Navbar />
+        <div className="container mt-3">
+          <UserList />
+        </div>
     </div>
   );
 }
