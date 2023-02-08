@@ -1,57 +1,56 @@
 import Navbar from './components/Navbar'
 import UserList from './components/UserList';
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import Search from './components/Search';
 import Alert from './components/Alert';
 
-export class App extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: false,
-            users: [],
-            error: null
-        }
-    }
+const App = ()=>{
+
+    const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
 
-    searchUsers = (text) => {
-        this.setState({loading: true});
+    const searchUsers = (text) => {
+        setLoading(true);
         fetch(`https://api.github.com/search/users?q=${text}`)
         .then(res => res.json())
-        .then(data => this.setState({users: data.items, loading: false}))
+        .then(data => 
+                {
+                    setUsers(data.items)
+                    setLoading(false);
+                }
+            )
     }
 
-    clearResult = () => {
-        this.setState({users: []});
+    const clearResult = () => {
+        setUsers([])
     }
 
-    displayAlert = (msg, type) => {
-        this.setState(  { error:{msg, type} }  );
+    const displayAlert = (msg, type) => {
+        setError({msg, type})
         setTimeout(() => {
-            this.setState({error: null});
+            setError(null)
         }
         , 3000);
     }
 
-    render() {
-        return (
-        <div>
-            <Navbar />
-            <Search 
-                searchUsers={this.searchUsers} 
-                clear={this.clearResult} 
-                clearButton={this.state.users.length > 0 ? true : false} 
-                displayAlert={this.displayAlert} />
-            <Alert error={this.state.error}/> 
+    return (
+    <div>
+        <Navbar />
+        <Search 
+            searchUsers={searchUsers} 
+            clear={clearResult} 
+            clearButton={users.length > 0 ? true : false} 
+            displayAlert={displayAlert} />
+        <Alert error={error}/> 
 
-            <div className="container mt-3">
-                <UserList users={this.state.users} key={this.state.users.id} loading={this.state.loading} />
-            </div>
+        <div className="container mt-3">
+            <UserList users={users} key={users.id} loading={loading} />
         </div>
-        );
-    }
+    </div>
+    );
 }
 
 export default App

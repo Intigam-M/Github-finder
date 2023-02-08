@@ -1,47 +1,39 @@
-import React, { Component } from 'react'
+import { useState } from 'react';
 
-export class Search extends Component {
+const Search = ({displayAlert, searchUsers, clearButton, clear}) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: ''
-        }
+    const [ text, setText ]  = useState('')
+
+    const onChange = (e) => {
+        setText(e.target.value);
     }
 
-    onChange = (e) => {
-        this.setState({text: e.target.value});
-    }
-
-
-    onSubmit = (e) => {
+   const onSubmit = (e) => {
         e.preventDefault();
 
-        if(this.state.text === '') {
-            this.props.displayAlert('Please enter something', 'danger');
+        if(text === '') {
+            displayAlert('Please enter something', 'danger');
         }else{
-            this.props.searchUsers(this.state.text);
-            this.setState({text: ''});
+            searchUsers(text);
+            setText('');
         }
 
     }
 
 
-    render() {
-        return (
+    return (
         <div className="container my-3">
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={onSubmit}>
                 <div className="input-group">
-                    <input type="text" value={this.state.text} onChange={this.onChange} className='form-control' placeholder='Search User' />
+                    <input type="text" value={text} onChange={onChange} className='form-control' placeholder='Search User' />
                     <button className='btn btn-primary' type='submit'>Search</button>
                 </div>
             </form>
             {
-                this.props.clearButton && <button onClick={this.props.clear} className='btn btn-danger mt-2 col-12'>Clear result</button>
+               clearButton && <button onClick={clear} className='btn btn-danger mt-2 col-12'>Clear result</button>
             }
         </div>
-        )
-    }
+    )
 }
 
 export default Search

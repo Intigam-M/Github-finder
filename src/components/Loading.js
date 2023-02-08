@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class loading extends Component {
-  render() {
+const loading = () => {
     return (
         <div className='d-flex.justify-content-center'>
             <div className='spinner-grow text-primary'>
@@ -9,7 +8,6 @@ export class loading extends Component {
             </div>
         </div>
     )
-  }
 }
 
 export default loading
