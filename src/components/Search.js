@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AlertContext } from '../context/alertContext';
+import { UsersContext } from '../context/usersContext';
 
-const Search = ({displayAlert, searchUsers, clearButton, clear}) => {
+const Search = () => {
 
     const [ text, setText ]  = useState('')
+    const {searchUsers, users, clearUsers } = useContext(UsersContext)
+    const {displayAlert} = useContext(AlertContext)
 
     const onChange = (e) => {
         setText(e.target.value);
@@ -17,9 +21,7 @@ const Search = ({displayAlert, searchUsers, clearButton, clear}) => {
             searchUsers(text);
             setText('');
         }
-
     }
-
 
     return (
         <div className="container my-3">
@@ -30,7 +32,7 @@ const Search = ({displayAlert, searchUsers, clearButton, clear}) => {
                 </div>
             </form>
             {
-               clearButton && <button onClick={clear} className='btn btn-danger mt-2 col-12'>Clear result</button>
+               users.length > 0 && <button onClick={clearUsers} className='btn btn-danger mt-2 col-12'>Clear result</button>
             }
         </div>
     )

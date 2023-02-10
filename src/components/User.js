@@ -1,4 +1,3 @@
-
 const User = (props) => {
 
     const {login, avatar_url, html_url} = props.user;
